@@ -43,7 +43,7 @@ with open('newdata.csv') as f:
         if row[7]==' -  ' or row[8] == ' -  ' or row[11] == ' -  ':
             continue;
         # outlier
-        if int(row[11]) < 5000:
+        if int(row[11]) < 100000:
             continue;
 # borouch, neighborhood, building category, zip code, residental units,
 # commercial units, land square, gross square, tax class, building class
