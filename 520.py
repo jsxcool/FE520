@@ -24,12 +24,7 @@ data = data.drop([data.columns[0], 'BLOCK', 'LOT', 'TAX CLASS AT PRESENT', 'BUIL
                   'EASE-MENT', 'ADDRESS', 'APARTMENT NUMBER', 'TOTAL UNITS', 'YEAR BUILT', 'SALE DATE'], axis=1)
 #print(data.head())
 #print(data.corr())
-'''correlation = data.corr()
-fig, ax = plt.subplots(figsize=(20, 20))
-ax.matshow(correlation)
-plt.xticks(range(len(correlation.columns)), correlation.columns)
-plt.yticks(range(len(correlation.columns)), correlation.columns)
-plt.show()'''
+
 data.to_csv("newdata.csv")
 
 X = []
@@ -40,10 +35,11 @@ with open('newdata.csv') as f:
         if reader.line_num == 1:
             continue;
         # missing value 
+        # 7, 8 are areas, 11 is house price
         if row[7]==' -  ' or row[8] == ' -  ' or row[11] == ' -  ':
             continue;
         # outlier
-        if int(row[11]) < 100000:
+        if int(row[7])==0 or int(row[8])==0 or int(row[11]) < 100000:
             continue;
 # borouch, neighborhood, building category, zip code, residental units,
 # commercial units, land square, gross square, tax class, building class
@@ -61,6 +57,15 @@ df = pd.DataFrame(X, columns=['borouch', 'neighborhood', 'building category',
 df.to_csv("newnewdata.csv")
 
 
+data2 = pd.read_csv('newnewdata.csv')
+correlation = data2.corr()
+fig, ax = plt.subplots(figsize=(12, 12))
+#ax.matshow(correlation)
+cax = ax.matshow(correlation, interpolation='nearest')
+fig.colorbar(cax)
+plt.xticks(range(len(correlation.columns)), correlation.columns)
+plt.yticks(range(len(correlation.columns)), correlation.columns)
+plt.show()
 
 
 
