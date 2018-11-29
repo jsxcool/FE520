@@ -35,18 +35,11 @@ with open('newdata.csv') as f:
         if reader.line_num == 1:
             continue;
         # missing value 
-        # 7, 8 are areas, 11 is house price
-<<<<<<< HEAD
-        if row[7]==' -  ' or row[8] == ' -  ' or row[11] == ' -  ':
-            continue;
-        # outlier
-        if int(row[7])==0 or int(row[8])==0 or int(row[11]) < 100000:
-=======
+        # 7, 8 are areas, 10 is house price
         if row[7]==' -  ' or row[8] == ' -  ' or row[10] == ' -  ':
             continue;
         # outlier
         if int(row[7])==0 or int(row[8])==0 or int(row[10]) < 100000:
->>>>>>> 29e652f5332cb3ac32351cf6c2d4dfd409f11f80
             continue;
 # borouch, neighborhood, building category, zip code, residental units,
 # commercial units, land square, gross square, tax class, building class
@@ -65,19 +58,4 @@ df = df.drop(df.columns[1], axis=1)
 df.to_csv("newnewdata.csv")
 
 
-data2 = pd.read_csv('newnewdata.csv')
-correlation = data2.corr()
-fig, ax = plt.subplots(figsize=(12, 12))
-#ax.matshow(correlation)
-cax = ax.matshow(correlation, interpolation='nearest')
-fig.colorbar(cax)
-plt.xticks(range(len(correlation.columns)), correlation.columns)
-plt.yticks(range(len(correlation.columns)), correlation.columns)
-plt.show()
-<<<<<<< HEAD
 
-
-
-
-=======
->>>>>>> 29e652f5332cb3ac32351cf6c2d4dfd409f11f80
