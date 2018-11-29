@@ -11,7 +11,6 @@ X = np.array(x)
 y = [1,40,82,31,4,52]
 Y = np.array(y)
 z = [3,11,52,53,49,5]
-
 O = 2*X + Y
 #print(O)
 data = { 'X': X, 'Y': Y, 'Z': z, 'O': O }
@@ -21,15 +20,11 @@ print(df.corr())
 
 data = pd.read_csv('nyc-rolling-sales.csv')
 data = data.drop([data.columns[0], 'BLOCK', 'LOT', 'TAX CLASS AT PRESENT', 'BUILDING CLASS AT PRESENT',
-                  'EASE-MENT', 'ADDRESS', 'APARTMENT NUMBER', 'TOTAL UNITS', 'YEAR BUILT', 'SALE DATE'], axis=1)
+                  'EASE-MENT', 'ADDRESS', 'APARTMENT NUMBER', 'TOTAL UNITS', 'YEAR BUILT', 'SALE DATE',
+                  'BUILDING CLASS AT TIME OF SALE'], axis=1)
 #print(data.head())
 #print(data.corr())
-'''correlation = data.corr()
-fig, ax = plt.subplots(figsize=(20, 20))
-ax.matshow(correlation)
-plt.xticks(range(len(correlation.columns)), correlation.columns)
-plt.yticks(range(len(correlation.columns)), correlation.columns)
-plt.show()'''
+
 data.to_csv("newdata.csv")
 
 X = []
@@ -40,28 +35,35 @@ with open('newdata.csv') as f:
         if reader.line_num == 1:
             continue;
         # missing value 
-        if row[7]==' -  ' or row[8] == ' -  ' or row[11] == ' -  ':
+        # 7, 8 are areas, 11 is house price
+        if row[7]==' -  ' or row[8] == ' -  ' or row[10] == ' -  ':
             continue;
         # outlier
-        if int(row[11]) < 100000:
+        if int(row[7])==0 or int(row[8])==0 or int(row[10]) < 100000:
             continue;
 # borouch, neighborhood, building category, zip code, residental units,
 # commercial units, land square, gross square, tax class, building class
 # sale price
         X.append([row[1], row[2], row[3], row[4], row[5], row[6], row[7],
-                  row[8], row[9], row[10], row[11]])
-        Y.append(row[11])
+                  row[8], row[9], row[10]])
+        Y.append(row[10])
 
 print(len(X))
 
 df = pd.DataFrame(X, columns=['borouch', 'neighborhood', 'building category',
                               'zipCode', 'residental units', 'commercial units',
                               'land square', 'gross square', 'taxClass',
-                              'buildingClass', 'sale price'])
+                              'sale price'])
+df = df.drop(df.columns[1], axis=1)
 df.to_csv("newnewdata.csv")
 
 
-
-
-
-
+data2 = pd.read_csv('newnewdata.csv')
+correlation = data2.corr()
+fig, ax = plt.subplots(figsize=(12, 12))
+#ax.matshow(correlation)
+cax = ax.matshow(correlation, interpolation='nearest')
+fig.colorbar(cax)
+plt.xticks(range(len(correlation.columns)), correlation.columns)
+plt.yticks(range(len(correlation.columns)), correlation.columns)
+plt.show()
