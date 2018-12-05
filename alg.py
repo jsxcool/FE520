@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import csv
 from sklearn import linear_model
 
+#Do 1~9 have a sequence ? eg, from cheap - expensive 
 dic = {"01 ONE FAMILY DWELLINGS                    ":1, 
        "02 TWO FAMILY DWELLINGS                    ":1,
        "03 THREE FAMILY DWELLINGS                  ":1,
@@ -90,10 +91,10 @@ cax = ax.matshow(correlation, interpolation='nearest')
 fig.colorbar(cax)
 plt.xticks(range(len(correlation.columns)), correlation.columns)
 plt.yticks(range(len(correlation.columns)), correlation.columns)
-plt.show()
+#plt.show()
 
-
-# X, Y need to be converted to array ???
+data2 = data2.drop([data2.columns[0], 'commercial units', 'land square'], axis=1)
+data2.to_csv("ultdata.csv")
 
 #regr = linear_model.LinearRegression()
 #regr.fit(X, Y)
