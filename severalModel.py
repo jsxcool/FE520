@@ -12,12 +12,11 @@ from sklearn.model_selection import GridSearchCV
 
 X = []    # features
 Y = []    # sale_price
-with open('ourdata.csv') as f:
+with open('ultdata.csv') as f:
     reader = csv.reader(f)
     for row in reader:
         if reader.line_num == 1:
             continue;
-
         X.append([ int(row[1]), int(row[2]), int(row[3]), int(row[4]),
                    int(row[5]), int(row[6])])
         Y.append(int(row[7]))  
@@ -35,14 +34,26 @@ print("MLP Accuracy: ", regr3.score(x_test, y_test))
 '''
 
 # ensemble learning: average the outputs of many decision trees
-regr2 = RandomForestRegressor(max_depth=2, random_state=0,
-                              n_estimators=100)
+regr2 = RandomForestRegressor()
 '''
 regr2.fit(x_train, y_train)
 print("RF Accuracy: ", regr2.score(x_test, y_test))
 '''
-param_grid = {'max_depth':
-}
+
+param_grid = {'n_estimators': [10,20,30,40,50,60,70,80,90,100],
+              'max_depth': [2,3,4,5],
+              }
+gs = GridSearchCV(regr2, param_grid, cv=5) # 20 folds cross-validation
+gs.fit(X,Y)
+
+maxMean = 0
+param = {}
+for ele in gs.grid_scores_:
+    if ele[1] > maxMean:
+        maxMean = ele[1]
+        param = ele[0]
+print(maxMean, param)
+
 
 
 
