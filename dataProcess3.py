@@ -38,7 +38,7 @@ with open("newnewnewdata.csv") as f:
 		X.append([ int(row[1]), int(row[2]), int(row[3]), int(row[4]),			
                	   int(row[5]), int(row[6]), int(row[7])])
 
-df = pd.DataFrame(X, columns=['borouch', 'building category','zipCode', 
+df = pd.DataFrame(X, columns=['borouch', 'block','zipCode', 
 							  'residental units', 'gross square', 'taxClass',
                               'sale price'])
 df.to_csv("ultdata.csv")        
