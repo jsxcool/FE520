@@ -46,7 +46,7 @@ for ele in gs.grid_scores_:
         param = ele[0]
 print(maxMean, param)
 # best parameter {'activation': 'relu', 'solver': 'adam'}, the same as default 
-# R^2 covirance: 0.14600261914616436
+# R^2 variance: 0.14600261914616436
 
 
 # draw the diagram: score vs hidden units
@@ -62,7 +62,7 @@ plt.title('One hidden layer ANN')
 plt.grid(True)
 plt.show()
 
-
+# score: 0.625
 bestRegr = MLPRegressor()  # which is also default 
 bestRegr.fit(X, Y)
 y_pred = bestRegr.predict(X)

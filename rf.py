@@ -36,7 +36,7 @@ def myGridSearch(estimator, treeDepth):
 n_estimators = [1,2,3,4,5,10,20,30,40,50]
 max_depth = [2,3,4,5,6]
 myGridSearch(n_estimators, max_depth)           
-
+# best parameter : n_estimators=3, max_depth=6
 
 # draw scatter between predicted and real with best parameter
 regr = RandomForestRegressor(n_estimators=3, max_depth=6)
