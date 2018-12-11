@@ -33,12 +33,26 @@ regr3.fit(x_train, y_train)
 print("MLP Accuracy: ", regr3.score(x_test, y_test))
 '''
 
+<<<<<<< HEAD
 # ensemble learning: average the outputs of many decision trees
 regr2 = RandomForestRegressor()
+=======
+# Ensemble learning: average the outputs of many decision trees
+# For every decision tree, classify every attribute into several categories,
+# then for the same category, average the target values as output 
+regr2 = RandomForestRegressor(max_depth=2, random_state=0,
+                              n_estimators=100)
+>>>>>>> e2c828152ef1909f5e7c4b313799fced95b71738
 '''
 regr2.fit(x_train, y_train)
 print("RF Accuracy: ", regr2.score(x_test, y_test))
+
+
+regr3 = MLPRegressor()
+regr3.fit(x_train, y_train)
+print("MLP Accuracy: ", regr3.score(x_test, y_test))
 '''
+<<<<<<< HEAD
 
 param_grid = {'n_estimators': [10,20,30,40,50,60,70,80,90,100],
               'max_depth': [2,3,4,5],
@@ -54,7 +68,19 @@ for ele in gs.grid_scores_:
         param = ele[0]
 print(maxMean, param)
 
+=======
+param_grid = {'n_estimators': [10,20,30,40,50,60,70,80,90,100],
+              'max_depth': [2:3:4:5],
+              }
+>>>>>>> e2c828152ef1909f5e7c4b313799fced95b71738
 
+maxMean = 0
+param = {}
+for ele in gs.grid_scores_:
+    if ele[1] > maxMean:
+        maxMean = ele[1]
+        param = ele[0]
+print(maxMean, param)
 
 
 #print(cross_val_score(regr, X, Y, cv=5))

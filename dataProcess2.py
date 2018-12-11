@@ -10,9 +10,14 @@ import matplotlib.pyplot as plt
 import csv
 
 
+<<<<<<< HEAD
 # convert text data to numerical data by dictionary (hashmap) 
 # 1 = Dewellings , 2 = Condos , 3 = Goverment , 4 = Other , 5 = Rentals, #
 # 6 = Coops , 7 = Commercial , 8 = Livilyhood , 9 = Religious # 
+=======
+# convert text data to numerical data by dictionary (hashmap)
+# Do 1~9 have a sequence ? eg, from cheap - expensive 
+>>>>>>> e2c828152ef1909f5e7c4b313799fced95b71738
 dic = {"01 ONE FAMILY DWELLINGS                    ":1, 
        "02 TWO FAMILY DWELLINGS                    ":1,
        "03 THREE FAMILY DWELLINGS                  ":1,
@@ -116,6 +121,155 @@ for i in range(10200, 11695):
     else:
         dic2[str(i)] = 7
 
+dic2 = {"10001":1,
+	   "10010":1,
+	   "10011":1,
+	   "10022":1,
+	   "10016":1,
+	   "10036":1,
+	   "10017":1,
+	   "10167":1,
+	   "10018":1,
+	   "10019":1,
+	   "10002":2,
+	   "10003":2,
+	   "10004":2,
+	   "10005":2,
+	   "10006":2,
+	   "10007":2,
+	   "10008":2,
+	   "10009":2,
+	   "10012":2,
+	   "10013":2,
+	   "10014":2,
+	   "10038":2,
+	   "10021":3,
+	   "10023":3,
+	   "10024":3,
+	   "10025":3,
+	   "10028":3,
+	   "10029":3,
+	   "10065":3,
+	   "10075":3,
+	   "10128":3,
+	   "10026":4,
+	   "10027":4,
+	   "10035":4,
+	   "10037":4,
+	   "10030":4,
+	   "10031":4,
+	   "10039":4,
+	   "10032":4,
+	   "10033":4,
+	   "10034":4,
+	   "10040":4,
+        "10044": 4,
+        "10451": 5,
+	   "10452":5,
+	   "10453":5,
+	   "10454":5,
+	   "10455":5,
+	   "10456":5,
+	   "10457":5,
+	   "10458":5,
+	   "10459":5,
+	   "10460":5,
+	   "10461":5,
+	   "10462":5,
+	   "10463":5,
+	   "10464":5,
+	   "10465":5,
+	   "10466":5,
+	   "10467":5,
+	   "10468":5,
+	   "10469":5,
+	   "10470":5,
+	   "10471":5,
+	   "10472":5,
+	   "10473":5,
+	   "10474":5,
+	   "10475":5,
+	   "10803":5,
+	   "11102":6,
+	   "11103":6,
+	   "11104":6,
+	   "11105":6,
+	   "11201":6,
+	   "11102":6,
+	   "11202":6,
+	   "11203":6,
+	   "11204":6,
+	   "11205":6,
+	   "11206":6,
+	   "11207":6,
+	   "11208":6,
+	   "11209":6,
+	   "11210":6,
+	   "11211":6,
+	   "11212":6,
+	   "11213":6,
+	   "11214":6,
+	   "11215":6,
+	   "11216":6,
+	   "11217":6,
+	   "11218":6,
+	   "11219":6,
+	   "11220":6,
+	   "11221":6,
+	   "11222":6,
+	   "11223":6,
+	   "11224":6,
+	   "11225":6,
+	   "11226":6,
+	   "11227":6,
+	   "11228":6,
+	   "11229":6,
+	   "11230":6,
+	   "11231":6,
+	   "11232":6,
+	   "11233":6,
+	   "11234":6,
+	   "11235":6,
+	   "11236":6,
+	   "11237":6,
+	   "11238":6,
+	   "11249":6,
+	   "11369":6,
+	   "11370":6,
+	   "11371":6,
+	   "11372":6,
+	   "11373":6,
+	   "11374":6,
+	   "11375":6,
+	   "11376":6,
+	   "11377":6,
+	   "11378":6,
+	   "11420":6,
+	   "11001":7,
+	   "11004":7,
+	   "11362":7,
+	   "11363":7,
+	   "11426":7,
+	   "11354":7,
+	   "11355":7,
+	   "11356":7,
+	   "11357":7,
+	   "11358":7,
+	   "11359":7,
+	   "11360":7,
+	   "11361":7,
+	   "11364":7,
+	   "11365":7,
+	   "11366":7,
+	   "11367":7,
+	   "11368":7,
+	   "11411":7,
+	   "11691":7,
+	   "11692":7,
+	   "11693":7,
+	   "11694":7,
+    }
+
 
 # Read in data, storing string as int 
 X = []    # features and label
@@ -124,11 +278,27 @@ with open('newnewdata.csv') as f:
     for row in reader:
         if reader.line_num == 1:
             continue;
+<<<<<<< HEAD
         row[2] = dic[row[2]] 
         row[5] = dic2[row[5]]
         X.append([ int(row[1]), row[2], int(row[3]), int(row[4]),
                    row[5], int(row[6]), int(row[7]), int(row[8]), 
                    int(row[9]), int(row[10]), int(row[11]), int(row[12]) ])
+=======
+        row[2] = dic[row[2]]
+        row[3] = dic2[row[3]]
+        X.append([ int(row[1]), row[2], row[3], int(row[4]),
+                   int(row[5]), int(row[6]), int(row[7]), 
+                   int(row[8]), int(row[9]) ])
+
+
+df = pd.DataFrame(X, columns=['borouch', 'building category','zipCode', 
+							  'residental units', 'commercial units',
+                              'land square', 'gross square', 'taxClass',
+                              'sale price'])
+df.to_csv("newnewnewdata.csv")        
+
+>>>>>>> e2c828152ef1909f5e7c4b313799fced95b71738
 
 
 #Implement correlation analysis to eleminate some features unrelated to sale_price
@@ -146,6 +316,7 @@ plt.yticks(range(len(correlation.columns)), correlation.columns)
 plt.show()
 
 
+<<<<<<< HEAD
 # drop some features with low correlation value
 df = df.drop(['lot', 'commercial units', 'land square', 'year built'], axis=1)
 # drop one of the features that is highly relevant to each other
@@ -155,5 +326,13 @@ df = df.drop(['building category'], axis=1)
 df.to_csv("newnewnewdata.csv")
 
 
+=======
+# drop two features with low correlation value
+data2 = data2.drop(['commercial units', 'land square'], axis=1)
 
+# delete 'building catagory', because it's almost 100% relevent to 'tax_class'
+data2 = data2.drop(['building category'], axis=1)
+>>>>>>> e2c828152ef1909f5e7c4b313799fced95b71738
+
+data2.to_csv("ultdata.csv")
 
