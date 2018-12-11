@@ -6,11 +6,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
-def scoreOneLayer(n):
-	regr = MLPRegressor(hidden_layer_sizes=(n))
-	regr.fit(X, Y)
-	return regr.score(x_test, y_test)
-
 X = []    # features
 Y = []    # sale_price
 with open('ultdata.csv') as f:
@@ -24,8 +19,18 @@ with open('ultdata.csv') as f:
 
 x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2)
 
+def scoreOneLayer(n):
+	regr = MLPRegressor(hidden_layer_sizes=(n))
+	regr.fit(X, Y)
+	return regr.score(x_test, y_test)
 
-'''        
+def scoreTwoLayer(n):
+	regr = MLPRegressor(hidden_layer_sizes=(n, n//3))
+	regr.fit(X, Y)
+	return regr.score(X, Y)
+
+   
+# grid_search finds best parameter     
 regr = MLPRegressor(hidden_layer_sizes=(50))
 param_grid = {'activation': ['logistic', 'tanh', 'relu'],
               'solver': ['sgd', 'adam'],
@@ -42,17 +47,31 @@ for ele in gs.grid_scores_:
 print(maxMean, param)
 # best parameter {'activation': 'relu', 'solver': 'adam'}, the same as default 
 # R^2 covirance: 0.14600261914616436
-'''
 
+
+# draw the diagram: score vs hidden units
 units = np.arange(20,150,5)
 score = []
 for i in units:
 	score.append(scoreOneLayer(i))
 
 plt.plot(units, score, marker='o')
-plt.xlabel('n hidden units')
+plt.xlabel('number of hidden units')
 plt.ylabel('R^2 variance')
 plt.title('One hidden layer ANN')
 plt.grid(True)
 plt.show()
 
+
+bestRegr = MLPRegressor()  # which is also default 
+bestRegr.fit(X, Y)
+y_pred = bestRegr.predict(X)
+plt.scatter(Y, y_pred)
+y_arr = np.array(Y)
+plt.plot([y_arr.min(), y_arr.max()], [y_arr.min(), y_arr.max()], color='red', lw=2)
+plt.xlabel('Real sale_price $')
+plt.ylabel('Predicted sale_price $')
+plt.title('Predict NYC House Price by MLP')
+plt.xlim(0, 5000000)
+plt.ylim(0, 5000000)
+plt.show()

@@ -1,9 +1,9 @@
+# Ensemble learning: average the outputs of many decision trees
+# For every decision tree, classify every attribute into several categories,
+# then for the same category, average the target value as output
 import numpy as np
 import csv
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import cross_val_predict
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import GridSearchCV
 import matplotlib.pyplot as plt
 
 X = []    # features
@@ -17,30 +17,32 @@ with open('ultdata.csv') as f:
                    int(row[5]), int(row[6])])
         Y.append(int(row[7]))  
 
+# gridSearch to get the best parameter
+def myGridSearch(estimator, treeDepth):
+	maxScore = -10000
+	bestI = 0
+	bestJ = 0
+	for i in range(len(estimator)):
+		for j in range(len(treeDepth)):
+			regr = RandomForestRegressor(n_estimators=estimator[i], max_depth=treeDepth[j])
+			regr.fit(X, Y)
+			s = regr.score(X, Y)
+			if s > maxScore:
+				maxScore = s
+				bestI = estimator[i]
+				bestJ = treeDepth[j]
+	print('maxScore: ', maxScore, ' estimator: ', bestI, ' max_depth: ', bestJ) 
 
-# ensemble learning: average the outputs of many decision trees
-regr2 = RandomForestRegressor()
-param_grid = {'n_estimators': [1,2,3,4,5,10,20,40],
-              'max_depth': [2,3,4,5,6],
-              }
-gs = GridSearchCV(regr2, param_grid, cv=5) # 5 folds cross-validation
-gs.fit(X,Y)
+n_estimators = [1,2,3,4,5,10,20,30,40,50]
+max_depth = [2,3,4,5,6]
+myGridSearch(n_estimators, max_depth)           
 
-'''
-maxMean = -10000
-param = {}
-for ele in gs.grid_scores_:
-    if ele[1] > maxMean:
-        maxMean = ele[1]
-        param = ele[0]
-print(maxMean, param)
-# best parameter: {'max_depth': 3, 'n_estimators': 5}
-# R^2 varience: -0.1781369139974362
 
-'''
 # draw scatter between predicted and real with best parameter
-regr = RandomForestRegressor(max_depth=3, n_estimators=5)
-y_pred = cross_val_predict(regr, X, Y, cv=5)
+regr = RandomForestRegressor(n_estimators=3, max_depth=6)
+regr.fit(X, Y)
+print(regr.score(X, Y)) #0.868
+y_pred = regr.predict(X) 
 plt.scatter(Y, y_pred)
 y_arr = np.array(Y)
 plt.plot([y_arr.min(), y_arr.max()], [y_arr.min(), y_arr.max()], color='red', lw=2)
@@ -50,6 +52,5 @@ plt.title('Predict NYC House Price by RF')
 plt.xlim(0, 5000000)
 plt.ylim(0, 5000000)
 plt.show()
-
 
 

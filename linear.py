@@ -19,29 +19,18 @@ with open('ultdata.csv') as f:
 
 
 regr = linear_model.LinearRegression()
-
-'''
-# n-folds cross-validation
-n_fold = np.arange(5, 100)
-score = [] 
-for i in n_fold:
-	 score.append(cross_val_score(regr, X, Y, cv=i).mean())
-plt.plot(n_fold, score)
-plt.xlabel('n-folds') 
-plt.ylabel('Variance score')
-plt.grid(True)
-plt.show()
-'''
+regr.fit(X, Y)
+print(regr.score(X, Y))  # 0.6714874629993289
 
 
-# draw scatter between predicted and real with best n-folds
-y_pred = cross_val_predict(regr, X, Y, cv=5)
+# draw scatter between predicted and real 
+y_pred = regr.predict(X)
 plt.scatter(Y, y_pred)
 y_arr = np.array(Y)
 plt.plot([y_arr.min(), y_arr.max()], [y_arr.min(), y_arr.max()], color='red', lw=2)
 plt.xlabel('Real sale_price $')
 plt.ylabel('Predicted sale_price $')
-plt.title('Predict NYC House Price by Cross-Validation')
+plt.title('Predict NYC House Price by linear regression')
 plt.xlim(0, 5000000)
 plt.ylim(0, 5000000)
 plt.show()
